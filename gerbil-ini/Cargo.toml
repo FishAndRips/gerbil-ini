@@ -1,0 +1,10 @@
+[package]
+name = "gerbil-ini"
+description = "Simple no-std compatible ini parser"
+version = "0.1.1"
+edition = "2021"
+rust-version = "1.65"
+license = "GPL-3.0-only"
+repository = "https://github.com/FishAndRips/gerbil-ini"
+
+[dependencies]
