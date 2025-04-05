@@ -70,7 +70,7 @@ impl Ini {
     fn parse_simple(string: &str, config: IniMode) -> Result<Self, IniParsingError> {
         let mut ini = Ini::default();
 
-        let mut lines = string.lines().enumerate();
+        let mut lines = string.lines().enumerate().map(|(line_index, line)| (line_index + 1, line));
         let mut section = None;
 
         while let Some((line_number, line)) = lines.next() {
@@ -144,11 +144,11 @@ pub enum IniParsingError {
 impl Display for IniParsingError {
     fn fmt(&self, f: &mut Formatter<'_>) -> core::fmt::Result {
         match self {
-            Self::MissingEquals { line_number } => f.write_fmt(format_args!("{line_number}: Missing an `=` to separate the key and value")),
-            Self::ExpectedSectionTitle { line_number } => f.write_fmt(format_args!("{line_number}: Expected a section title")),
-            Self::BrokenSectionTitle { line_number } => f.write_fmt(format_args!("{line_number}: Expected a `]` to close a `[`")),
-            Self::DuplicateSection { line_number, section } => f.write_fmt(format_args!("{line_number}: Duplicate section `{section}`")),
-            Self::DuplicateSectionKey { line_number, section, key } => f.write_fmt(format_args!("{line_number}: Duplicate key `{key}` in section `{section}`"))
+            Self::MissingEquals { line_number } => f.write_fmt(format_args!("Parsing error on line {line_number}: Missing an `=` to separate the key and value")),
+            Self::ExpectedSectionTitle { line_number } => f.write_fmt(format_args!("Parsing error on line {line_number}: Expected a section title")),
+            Self::BrokenSectionTitle { line_number } => f.write_fmt(format_args!("Parsing error on line {line_number}: Expected a `]` to close a `[`")),
+            Self::DuplicateSection { line_number, section } => f.write_fmt(format_args!("Parsing error on line {line_number}: Duplicate section `{section}`")),
+            Self::DuplicateSectionKey { line_number, section, key } => f.write_fmt(format_args!("Parsing error on line {line_number}: Duplicate key `{key}` in section `{section}`"))
         }
     }
 }
