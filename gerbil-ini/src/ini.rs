@@ -60,6 +60,13 @@ impl Ini {
         self.sections.get(section)
     }
 
+    /// Get the value in the section of the ini.
+    ///
+    /// Returns `None` if the section or key do not exist.
+    pub fn get_value(&self, section: &str, key: &str) -> Option<&str> {
+        self.get_section(section).and_then(|s| s.get(key))
+    }
+
     fn parse_simple(string: &str, config: IniMode) -> Result<Self, IniParsingError> {
         let mut ini = Ini::default();
 

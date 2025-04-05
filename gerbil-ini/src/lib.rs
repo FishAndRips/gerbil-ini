@@ -30,6 +30,7 @@
 //! let ini = Ini::parse(some_ini, IniMode::Simple).expect("parse");
 //! let section = ini.get_section("My Section").unwrap();
 //! assert_eq!(section.get("some KEY"), Some("This is a value!"));
+//! assert_eq!(ini.get_value("Another Section", "anotherkey"), Some("//Wow Look At Me I'm A Value\\\\"));
 //! ```
 
 extern crate alloc;
